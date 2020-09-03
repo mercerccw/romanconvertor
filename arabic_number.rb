@@ -1,0 +1,3 @@
+
+class ArabicNumber
+end
