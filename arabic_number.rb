@@ -29,7 +29,6 @@ class ArabicNumber
     indexer = values.length() - 1
     subValues = []
     values.each { |item|
-
       subValues << item.to_s.concat("0" * indexer).to_i
       indexer -= 1
     } 

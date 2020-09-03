@@ -1,37 +1,50 @@
 class RomanNumber
 
-    @@specialValues = {
-        "I" => 1,
-        "V" => 5,
-        "X" => 10,
-        "L" => 50,
-        "C" => 100,
-        "D" => 500,
-        "M" => 1000
-    }
+    @@specialValues = [
+        "I",
+        "V",
+        "X",
+        "L",
+        "C",
+        "D",
+        "M"
+    ]
 
-    def convertToArabic(number)
-        numberLength = number.length() - 1
-        romanNumerals = number.split("")
-        arabicNumber = 0
-        wasSubtracted = false
-        for index in 0..numberLength
-            if (@@specialValues[romanNumerals[index]] == nil)
-                raise TypeError, 'Invalid roman numeral'
-            elsif (index == numberLength && wasSubtracted)
-                next
-            elsif (index == numberLength && !wasSubtracted)
-                arabicNumber += @@specialValues[romanNumerals[index]]
-            elsif (@@specialValues[romanNumerals[index]] < @@specialValues[romanNumerals[index + 1]])
-                value = @@specialValues[romanNumerals[index + 1]] - @@specialValues[romanNumerals[index]]
-                arabicNumber += value
-                wasSubtracted = true
-            elsif (@@specialValues[romanNumerals[index]] >= @@specialValues[romanNumerals[index + 1]])
-                arabicNumber += @@specialValues[romanNumerals[index]]
-                wasSubtracted = false
-            end
+    def roman_mapping
+        {
+          1000 => "M",
+          900 => "CM",
+          500 => "D",
+          400 => "CD",
+          100 => "C",
+          90 => "XC",
+          50 => "L",
+          40 => "XL",
+          10 => "X",
+          9 => "IX",
+          5 => "V",
+          4 => "IV",
+          1 => "I"
+        }
+    end
+
+    def to_arabic(str = self, result = 0)
+    return result if str.empty?
+    number = str
+    number = number.split("")
+    number.each do |numeral|
+        validNumeral = @@specialValues.include? numeral
+        if !validNumeral
+            raise TypeError, "Invalid roman numeral"
         end
-        return arabicNumber
+    end
+    roman_mapping.values.each do |roman|
+        if str.start_with?(roman)
+            result += roman_mapping.invert[roman]
+            str = str.slice(roman.length, str.length)
+            return to_arabic(str, result)
+        end
+    end
     end
 
 end
