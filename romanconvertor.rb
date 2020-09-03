@@ -5,7 +5,7 @@ require_relative './roman_number'
 def fromRoman(romanNumber)
     # Replace the following line with the actual code!
     number = RomanNumber.new
-    
+    return number.convertToArabic(romanNumber)
 end
 def toRoman(arabicNumber)
     # Replace the following line with the actual code!
