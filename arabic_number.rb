@@ -43,7 +43,6 @@ class ArabicNumber
     revisedPlacement = @@valueIncrements
     romanString = ""
     subValues.each { |item|
-      # puts item
       if (@@specialValues.key?(item))
         romanString.concat(@@specialValues[item])
       elsif (item > 1000)
@@ -62,14 +61,16 @@ class ArabicNumber
           romanString.concat(@@specialValues[10])
         end
       else
-        # puts "test"
         revisedPlacement << item
         revisedPlacement.sort!
         previousSlot = revisedPlacement.index(item) - 1
         nextSlot = revisedPlacement.index(item) + 1
         if (item == revisedPlacement[nextSlot] - revisedPlacement[previousSlot])
           romanString.concat(@@specialValues[revisedPlacement[previousSlot]])
-          romanString.concat(revisedPlacement[nextSlot])
+          romanString.concat(@@specialValues[revisedPlacement[nextSlot]])
+        elsif (item == revisedPlacement[nextSlot] - revisedPlacement[previousSlot - 1])
+          romanString.concat(@@specialValues[revisedPlacement[previousSlot - 1]])
+          romanString.concat(@@specialValues[revisedPlacement[nextSlot]])
         else
           twoSlotsPrior = previousSlot - 1
           difference =  item - revisedPlacement[previousSlot]
@@ -81,7 +82,6 @@ class ArabicNumber
       end
       revisedPlacement = @@valueIncrements
     } 
-    # puts romanString
     return romanString
   end
 end

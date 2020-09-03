@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 require_relative './arabic_number'
+require_relative './roman_number'
+
 def fromRoman(romanNumber)
     # Replace the following line with the actual code!
-    raise NotImplementedError
+    number = RomanNumber.new
+    
 end
 def toRoman(arabicNumber)
     # Replace the following line with the actual code!
